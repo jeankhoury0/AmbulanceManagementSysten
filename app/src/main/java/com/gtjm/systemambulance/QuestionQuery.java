@@ -10,9 +10,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.stream.Collectors;
 
-
+/**
+ * The class that query in the database. It provide an abstraction to be able to easily 
+ * request the database.
+ * @author gtjm
+ *
+ */
 public class QuestionQuery {
-    
+
     private String path;
     private String[] arrayOfFields;
     private Connection c = PostgreSQLJDBC.connect();
@@ -22,9 +27,15 @@ public class QuestionQuery {
         this.arrayOfFields = arrayOfFields;
     }
 
-    public String runQuery() throws SQLException {
-        ResultSet rs = getResults();
-        return stringifyResults(rs);
+    public String runQuery() {
+        try {
+            ResultSet rs = getResults();
+            return stringifyResults(rs);
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private ResultSet getResults() throws SQLException {
@@ -36,9 +47,8 @@ public class QuestionQuery {
 
     private String stringifyResults(ResultSet rs) throws SQLException {
         String res = "";
-        
-        while (rs.next()){
-            //  if field is first in array, don't add comma
+
+        while (rs.next()) {
             for (int i = 0; i < arrayOfFields.length; i++) {
                 if (i == 0) {
                     res += rs.getString(arrayOfFields[i]);
@@ -49,11 +59,10 @@ public class QuestionQuery {
             res += "\n";
         }
 
-        System.out.println(res);
         return res;
     }
 
-    private String getSQLQueryFromFile(String path){
+    private String getSQLQueryFromFile(String path) {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -68,8 +77,7 @@ public class QuestionQuery {
             e.printStackTrace();
         }
         return null;
-        
+
     }
-    
-    
+
 }

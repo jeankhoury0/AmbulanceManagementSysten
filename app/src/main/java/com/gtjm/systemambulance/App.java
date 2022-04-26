@@ -1,56 +1,35 @@
 package com.gtjm.systemambulance;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
- * Hello world!
- *
+ * Main class is the main access point to the MainWindow query 
+ * @author gtjm
+ * 
+
  */
-public class App 
-{
-    static Statement stmt = null;
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         new MainWindow();
-        
-         
-        
+
     }
 
-
-    public static String queryQuestion1(){
+    public static String queryQuestion1() {
         String[] fields = { "base_name", "ambulancier_disponible" };
-        QuestionQuery q = new QuestionQuery("app/src/main/resources/questions/q1.sql", fields);
-        try {
-            return q.runQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String path = "app/src/main/resources/questions/q1.sql";
+        QuestionQuery q = new QuestionQuery(path, fields);
+        return q.runQuery();
     }
 
     public static String queryQuestion2() {
         String[] fields = { "ambulancier_id", "fname", "lname", "duration_mean_in_minutes" };
-        QuestionQuery q = new QuestionQuery("app/src/main/resources/questions/q2.sql", fields);
-        try {
-            return q.runQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String path = "app/src/main/resources/questions/q2.sql";
+        QuestionQuery q = new QuestionQuery(path, fields);
+        return q.runQuery();
     }
 
     public static String queryQuestion3() {
         String[] fields = { "fname", "lname", "time_in_hours" };
-        QuestionQuery q = new QuestionQuery("app/src/main/resources/questions/q3.sql", fields);
-        try {
-            return q.runQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String path = "app/src/main/resources/questions/q3.sql";
+        QuestionQuery q = new QuestionQuery(path, fields);
+        return q.runQuery();
     }
 }

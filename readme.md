@@ -4,11 +4,11 @@ H22
 ## Contributors
 [@jeankhoury0](https://github.com/jeankhoury0)
 
-@Guillzmo
+[@GuiPil](https://github.com/GuiPil)
 
 [@tianpeng97](https://github.com/tianpeng97)
 
-@mahdi.mds99
+[@mahdimds99](https://github.com/mahdimds99)
 
 ## Tech Stack
 Java, postgreSQL

@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- * PostgreSQLJDBC
+ * PostgreSQLJDBC 
+ * Connect to the Postgres JDBC 
  */
 public class PostgreSQLJDBC {
     
