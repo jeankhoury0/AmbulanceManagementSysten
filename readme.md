@@ -1,10 +1,21 @@
 # IFT2935 - Projet de fin de session
 H22
 
+## Contributors
+[@jeankhoury0](https://github.com/jeankhoury0)
+
+@Guillzmo
+
+[@tianpeng97](https://github.com/tianpeng97)
+
+@mahdi.mds99
+
+## Tech Stack
+Java, postgreSQL
 ## How it works
 
 To initialise the project you have to edit the config.properties to your database settings
-Make sure to use the script file to initialise the db before using the program 
+Make sure to use the ```seed.sql``` file to initialise the db before using the program 
 
 
 >### ```Config.property```
