@@ -2,14 +2,14 @@
 ROLLBACK;
 begin transaction;
 
- DROP SCHEMA IF EXISTS public CASCADE;
+-- DROP SCHEMA IF EXISTS public CASCADE;
 
- DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
+--  DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
 
-CREATE SCHEMA public;
+-- CREATE SCHEMA public;
 
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO public;
+-- GRANT ALL ON SCHEMA public TO postgres;
+-- GRANT ALL ON SCHEMA public TO public;
 
 CREATE SCHEMA ambulancesystem;
 
