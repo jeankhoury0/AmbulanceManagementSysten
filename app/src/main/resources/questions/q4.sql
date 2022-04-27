@@ -1,1 +1,0 @@
-select * from ambulancesystem.question4;

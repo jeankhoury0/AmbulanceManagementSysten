@@ -14,29 +14,29 @@ public class App {
 
     public static String queryQuestion1() {
         String[] fields = { "base_name", "ambulancier_disponible" };
-        String path = "app/src/main/resources/questions/q1.sql";
-        QuestionQuery q = new QuestionQuery(path, fields);
+        String sql = "select * from ambulancesystem.question1;";
+        QuestionQuery q = new QuestionQuery(sql, fields);
         return q.runQuery();
     }
 
     public static String queryQuestion2() {
         String[] fields = { "ambulancier_id", "fname", "lname", "duration_mean_in_minutes" };
-        String path = "app/src/main/resources/questions/q2.sql";
-        QuestionQuery q = new QuestionQuery(path, fields);
+        String sql = "select * from ambulancesystem.question2;";
+        QuestionQuery q = new QuestionQuery(sql, fields);
         return q.runQuery();
     }
 
     public static String queryQuestion3() {
         String[] fields = { "fname", "lname", "time_in_hours" };
-        String path = "app/src/main/resources/questions/q3.sql";
-        QuestionQuery q = new QuestionQuery(path, fields);
+        String sql = "select * from ambulancesystem.question3;";
+        QuestionQuery q = new QuestionQuery(sql, fields);
         return q.runQuery();
     }
 
     public static String queryQuestion4() {
         String[] fields = { "id", "fullname", "heures_travail_mensuel", "salaire" };
-        String path = "app/src/main/resources/questions/q4.sql";
-        QuestionQuery q = new QuestionQuery(path, fields);
+        String sql = "select * from ambulancesystem.question4;";
+        QuestionQuery q = new QuestionQuery(sql, fields);
         return q.runQuery();
     }
 }
