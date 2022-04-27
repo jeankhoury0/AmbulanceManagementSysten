@@ -2,7 +2,6 @@
 ROLLBACK;
 begin transaction;
 
-
 DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
 
 CREATE SCHEMA ambulancesystem;
