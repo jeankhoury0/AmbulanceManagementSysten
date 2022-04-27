@@ -2,19 +2,18 @@
 ROLLBACK;
 begin transaction;
 
--- DROP SCHEMA IF EXISTS public CASCADE;
+ DROP SCHEMA IF EXISTS public CASCADE;
 
--- DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
+ DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
 
--- CREATE SCHEMA public;
+CREATE SCHEMA public;
 
--- GRANT ALL ON SCHEMA public TO postgres;
--- GRANT ALL ON SCHEMA public TO public;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
 
 CREATE SCHEMA ambulancesystem;
 
-set
-    search_path to ambulancesystem;
+set search_path to ambulancesystem;
 
 
 CREATE TABLE Base_type(
@@ -74,7 +73,6 @@ CREATE TABLE Intervention(
 CREATE OR REPLACE VIEW Question1 AS (
     -- max is 10h per week
     -- we are using mock date range to not return null value
-    SET SEARCH_PATH TO AMBULANCESYSTEM;
 
     WITH OP_IN_THE_WEEK AS
         (SELECT AMBULANCIER_ID,
@@ -100,11 +98,10 @@ CREATE OR REPLACE VIEW Question1 AS (
         AMBULANCIER_DISPONIBLE
     FROM GETCOUNT
     JOIN BASE ON GETCOUNT.BASE_ID = BASE.BASE_ID
-)
+);
 
 CREATE OR REPLACE VIEW Question2 AS (
     -- Question 2
-    SET SEARCH_PATH TO AMBULANCESYSTEM;
 
     WITH AVGDURATION AS
         (SELECT AMBULANCIER_ID,
@@ -120,12 +117,11 @@ CREATE OR REPLACE VIEW Question2 AS (
 
     SELECT *
     FROM AMBINFO
-    JOIN AVGDURATION USING (AMBULANCIER_ID);
-)
+    JOIN AVGDURATION USING (AMBULANCIER_ID)
+);
 
 CREATE OR REPLACE VIEW Question3 AS (
     -- Question 3
-    SET SEARCH_PATH TO AMBULANCESYSTEM;
 
     -- utilisation d'une date "mock" car notre date n'est pas active
     -- le temps de travail journalier max est de 3h
@@ -146,11 +142,10 @@ CREATE OR REPLACE VIEW Question3 AS (
     JOIN AMBULANCIER ON HEURE_CUMULEE.AMBULANCIER_ID = AMBULANCIER.AMBULANCIER_ID
     WHERE TIME_IN_HOURS < 3
     ORDER BY TIME_IN_HOURS
-)
+);
 
 CREATE OR REPLACE VIEW Question4 AS (
     -- Question 4
-    SET SEARCH_PATH TO AMBULANCESYSTEM;
 
     WITH
         AMBULANCIERS AS
@@ -173,7 +168,7 @@ CREATE OR REPLACE VIEW Question4 AS (
             32.52 * HEURES_TRAVAIL_MENSUEL AS SALAIRE
         FROM AMBULANCIERS
         NATURAL JOIN HEURES_DU_MOIS
-)
+);
 
 -- Seeds
 -- Generated using mockaroo.com
