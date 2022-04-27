@@ -17,14 +17,15 @@ Java, postgreSQL
 To make run the application first:
 
 1. Initialse the database by running the script ```seed.sql```
-2. Add the setings in [app/config.properties](app/config.properties)
+2. Add the setings in [/config.properties](/config.properties)
 >### ```Config.property```
 > config.JDBC.user=postgres
 > 
 >config.JDBC.password=admin
 >
-> config.JDBC.url=jdbc:postgresql://localhost:5432/project
+> config.JDBC.url=jdbc:postgresql://localhost:5432/
    
+
 *Make sure you leave no spaces in the file* 
 
 

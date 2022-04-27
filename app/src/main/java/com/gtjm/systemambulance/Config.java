@@ -12,7 +12,7 @@ public class Config {
     
     public static String getProperty(String property) {
         try {
-            InputStream input = new FileInputStream("app/config.properties");
+            InputStream input = new FileInputStream("config.properties");
             Properties prop = new Properties();
             prop.load(input);
             return prop.getProperty(property);
