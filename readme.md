@@ -14,13 +14,19 @@ H22
 Java, postgreSQL
 ## How it works
 
-To initialise the project you have to edit the config.properties to your database settings
-Make sure to use the ```seed.sql``` file to initialise the db before using the program 
+To make run the application first:
 
-
+1. Initialse the database by running the script ```seed.sql```
+2. Add the setings in [app/config.properties](app/config.properties)
 >### ```Config.property```
 > config.JDBC.user=postgres
 > 
 >config.JDBC.password=admin
 >
 > config.JDBC.url=jdbc:postgresql://localhost:5432/project
+   
+*Make sure you leave no spaces in the file* 
+
+
+3. Run the [project.jar](project.jar) using the command 
+``` java -jar "project.jar" ```

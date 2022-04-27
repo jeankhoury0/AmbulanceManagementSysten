@@ -2,14 +2,8 @@
 ROLLBACK;
 begin transaction;
 
--- DROP SCHEMA IF EXISTS public CASCADE;
 
---  DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
-
--- CREATE SCHEMA public;
-
--- GRANT ALL ON SCHEMA public TO postgres;
--- GRANT ALL ON SCHEMA public TO public;
+DROP SCHEMA IF EXISTS ambulancesystem CASCADE;
 
 CREATE SCHEMA ambulancesystem;
 
@@ -148,26 +142,27 @@ CREATE OR REPLACE VIEW Question4 AS (
     -- Question 4
 
     WITH
-        AMBULANCIERS AS
-        (
-            SELECT AMBULANCIER_ID AS ID
-            FROM AMBULANCIER
-        ),
-        HEURES_DU_MOIS AS
-        (
-            SELECT
-                AMBULANCIER_ID AS ID,
-                SUM(DURATION) AS HEURES_TRAVAIL_MENSUEL
-            FROM INTERVENTION
-            WHERE INTERVENTION_DATE >= date_trunc('month', CURRENT_DATE)
-            GROUP BY AMBULANCIER_ID
-        )
+    AMBULANCIERS AS
+    (
+        SELECT AMBULANCIER_ID , concat(FNAME, ' ' , LNAME) AS FULLNAME
+        FROM AMBULANCIER
+    ),
+    HEURES_DU_MOIS AS
+    (
         SELECT
-            ID,
-            HEURES_TRAVAIL_MENSUEL,
-            32.52 * HEURES_TRAVAIL_MENSUEL AS SALAIRE
-        FROM AMBULANCIERS
-        NATURAL JOIN HEURES_DU_MOIS
+            AMBULANCIER_ID,
+            SUM(DURATION/60) AS HEURES_TRAVAIL_MENSUEL
+        FROM INTERVENTION
+        WHERE INTERVENTION_DATE >= date_trunc('month', CURRENT_DATE)
+        GROUP BY AMBULANCIER_ID
+    )
+    SELECT
+        AMBULANCIER_ID AS ID,
+		FULLNAME,
+        HEURES_TRAVAIL_MENSUEL,
+        concat(32.52 * HEURES_TRAVAIL_MENSUEL,  ' $' ) AS SALAIRE
+    FROM AMBULANCIERS
+    NATURAL JOIN HEURES_DU_MOIS
 );
 
 -- Seeds
