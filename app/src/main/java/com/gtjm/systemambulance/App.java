@@ -32,4 +32,11 @@ public class App {
         QuestionQuery q = new QuestionQuery(path, fields);
         return q.runQuery();
     }
+
+    public static String queryQuestion4() {
+        String[] fields = { "id", "heures_travail_mensuel", "salaire" };
+        String path = "app/src/main/resources/questions/q4.sql";
+        QuestionQuery q = new QuestionQuery(path, fields);
+        return q.runQuery();
+    }
 }

@@ -69,6 +69,114 @@ CREATE TABLE Intervention(
     CONSTRAINT fk_ambulance FOREIGN KEY(ambulance_id) REFERENCES Ambulance(registration_number)
 );
 
+-- Questions as view
+
+CREATE OR REPLACE VIEW Question1 AS (
+    -- max is 10h per week
+    -- we are using mock date range to not return null value
+    SET SEARCH_PATH TO AMBULANCESYSTEM;
+
+    WITH OP_IN_THE_WEEK AS
+        (SELECT AMBULANCIER_ID,
+                DURATION
+            FROM INTERVENTION
+            WHERE INTERVENTION_DATE BETWEEN '2022-04-18' AND '2022-04-25' ),
+        HEURE_CUMULEE AS
+        (SELECT AMBULANCIER_ID,
+                (SUM(DURATION) / 60) AS TIME_IN_HOURS_THIS_WEEK
+            FROM OP_IN_THE_WEEK
+            GROUP BY AMBULANCIER_ID),
+        BY_BASE AS
+        (SELECT HEURE_CUMULEE.AMBULANCIER_ID,
+                BASE_ID
+            FROM HEURE_CUMULEE
+            JOIN AMBULANCIER ON HEURE_CUMULEE.AMBULANCIER_ID = AMBULANCIER.AMBULANCIER_ID),
+        GETCOUNT AS
+        (SELECT BASE_ID,
+                COUNT(AMBULANCIER_ID) AS AMBULANCIER_DISPONIBLE
+            FROM BY_BASE
+            GROUP BY BASE_ID)
+    SELECT BASE_NAME,
+        AMBULANCIER_DISPONIBLE
+    FROM GETCOUNT
+    JOIN BASE ON GETCOUNT.BASE_ID = BASE.BASE_ID
+)
+
+CREATE OR REPLACE VIEW Question2 AS (
+    -- Question 2
+    SET SEARCH_PATH TO AMBULANCESYSTEM;
+
+    WITH AVGDURATION AS
+        (SELECT AMBULANCIER_ID,
+                ROUND(AVG(DURATION),
+                    2) AS DURATION_MEAN_IN_MINUTES
+            FROM INTERVENTION
+            GROUP BY AMBULANCIER_ID),
+        AMBINFO AS
+        (SELECT AMBULANCIER_ID,
+                FNAME,
+                LNAME
+            FROM AMBULANCIER)
+
+    SELECT *
+    FROM AMBINFO
+    JOIN AVGDURATION USING (AMBULANCIER_ID);
+)
+
+CREATE OR REPLACE VIEW Question3 AS (
+    -- Question 3
+    SET SEARCH_PATH TO AMBULANCESYSTEM;
+
+    -- utilisation d'une date "mock" car notre date n'est pas active
+    -- le temps de travail journalier max est de 3h
+    WITH IN_THE_DAY AS
+        (SELECT AMBULANCIER_ID,
+                DURATION
+            FROM INTERVENTION
+            WHERE INTERVENTION_DATE = '2022-04-18' ),
+        HEURE_CUMULEE AS
+        (SELECT AMBULANCIER_ID,
+                (SUM(DURATION) / 60) AS TIME_IN_HOURS
+            FROM IN_THE_DAY
+            GROUP BY AMBULANCIER_ID)
+    SELECT FNAME,
+        LNAME,
+        TIME_IN_HOURS
+    FROM HEURE_CUMULEE
+    JOIN AMBULANCIER ON HEURE_CUMULEE.AMBULANCIER_ID = AMBULANCIER.AMBULANCIER_ID
+    WHERE TIME_IN_HOURS < 3
+    ORDER BY TIME_IN_HOURS
+)
+
+CREATE OR REPLACE VIEW Question4 AS (
+    -- Question 4
+    SET SEARCH_PATH TO AMBULANCESYSTEM;
+
+    WITH
+        AMBULANCIERS AS
+        (
+            SELECT AMBULANCIER_ID AS ID
+            FROM AMBULANCIER
+        ),
+        HEURES_DU_MOIS AS
+        (
+            SELECT
+                AMBULANCIER_ID AS ID,
+                SUM(DURATION) AS HEURES_TRAVAIL_MENSUEL
+            FROM INTERVENTION
+            WHERE INTERVENTION_DATE >= date_trunc('month', CURRENT_DATE)
+            GROUP BY AMBULANCIER_ID
+        )
+        SELECT
+            ID,
+            HEURES_TRAVAIL_MENSUEL,
+            32.52 * HEURES_TRAVAIL_MENSUEL AS SALAIRE
+        FROM AMBULANCIERS
+        NATURAL JOIN HEURES_DU_MOIS
+)
+
+-- Seeds
+-- Generated using mockaroo.com
 
 INSERT INTO Base_type (base_type_name) values ('hopital');
 INSERT INTO Base_type (base_type_name) values ('clinique medicale');

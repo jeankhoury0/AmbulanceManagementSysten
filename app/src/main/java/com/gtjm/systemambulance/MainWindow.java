@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 
 public class MainWindow {
-    
+
     public MainWindow() {
         initComponents();
     }
@@ -61,7 +61,7 @@ public class MainWindow {
                 d.add(btnQuestion1);
                 btnQuestion1.setBounds(10, 100, 205, 60);
                 btnQuestion1.addActionListener(e -> {
-                    textAreaReponse.setText(App.queryQuestion1()) ;
+                    textAreaReponse.setText(App.queryQuestion1());
                 });
                 // ---- btnQuestion2 ----
                 btnQuestion2.setText("Question 2");
@@ -82,7 +82,9 @@ public class MainWindow {
                 btnQuestion4.setText("Question 4");
                 d.add(btnQuestion4);
                 btnQuestion4.setBounds(10, 310, 205, 60);
-                
+                btnQuestion4.addActionListener(e -> {
+                    textAreaReponse.setText(App.queryQuestion4());
+                });
                 // ---- btnClear ----
                 btnClear.setText("Clear");
                 btnClear.setForeground(Color.red);
@@ -126,7 +128,7 @@ public class MainWindow {
                     d.setMinimumSize(preferredSize);
                     d.setPreferredSize(preferredSize);
                     mainFrame.setVisible(true);
-                    
+
                 }
             }
             mainFrameContentPane.add(d, BorderLayout.CENTER);
@@ -135,7 +137,6 @@ public class MainWindow {
         }
     }
 
-    
     private JFrame mainFrame;
     private JPanel d;
     private JLabel label1;
